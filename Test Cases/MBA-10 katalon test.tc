@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description>Summary: katalon test
+Description: </description>
+   <name>MBA-10 katalon test</name>
+   <tag>jira-integration</tag>
+   <integratedEntity>
+      <productName>JIRA</productName>
+      <properties>
+         <entry>
+            <key>integratedValue</key>
+            <value>{&quot;jiraIssue&quot;:{&quot;fields&quot;:{&quot;customFields&quot;:{&quot;customfield_10002&quot;:[],&quot;customfield_10018&quot;:{&quot;hasEpicLinkFieldDependency&quot;:false,&quot;showField&quot;:false,&quot;nonEditableReason&quot;:{&quot;reason&quot;:&quot;EPIC_LINK_SHOULD_BE_USED&quot;,&quot;message&quot;:&quot;To set an epic as the parent, use the epic link instead&quot;}},&quot;customfield_10019&quot;:&quot;0|i00013:&quot;},&quot;status&quot;:{&quot;id&quot;:10000,&quot;description&quot;:&quot;&quot;,&quot;iconUrl&quot;:&quot;https://yosefnems42.atlassian.net/&quot;,&quot;statusCategory&quot;:{&quot;id&quot;:2,&quot;key&quot;:&quot;new&quot;,&quot;colorName&quot;:&quot;blue-gray&quot;,&quot;self&quot;:&quot;https://yosefnems42.atlassian.net/rest/api/2/statuscategory/2&quot;,&quot;name&quot;:&quot;To Do&quot;},&quot;self&quot;:&quot;https://yosefnems42.atlassian.net/rest/api/2/status/10000&quot;,&quot;name&quot;:&quot;To Do&quot;},&quot;project&quot;:{&quot;self&quot;:&quot;https://yosefnems42.atlassian.net/rest/api/2/project/10000&quot;,&quot;key&quot;:&quot;MBA&quot;,&quot;id&quot;:10000,&quot;name&quot;:&quot;mobile app &quot;},&quot;components&quot;:[],&quot;summary&quot;:&quot;katalon test&quot;,&quot;reporter&quot;:{&quot;emailAddress&quot;:&quot;yosefnems42@gmail.com&quot;,&quot;active&quot;:true,&quot;displayName&quot;:&quot;yosef nems&quot;,&quot;accountId&quot;:&quot;712020:5ca5aec0-c940-47a8-ba63-0fd35d62d5d8&quot;,&quot;self&quot;:&quot;https://yosefnems42.atlassian.net/rest/api/2/user?accountId\u003d712020%3A5ca5aec0-c940-47a8-ba63-0fd35d62d5d8&quot;},&quot;assignee&quot;:{&quot;emailAddress&quot;:&quot;yosefnems42@gmail.com&quot;,&quot;active&quot;:true,&quot;displayName&quot;:&quot;yosef nems&quot;,&quot;accountId&quot;:&quot;712020:5ca5aec0-c940-47a8-ba63-0fd35d62d5d8&quot;,&quot;self&quot;:&quot;https://yosefnems42.atlassian.net/rest/api/2/user?accountId\u003d712020%3A5ca5aec0-c940-47a8-ba63-0fd35d62d5d8&quot;},&quot;priority&quot;:{&quot;id&quot;:3,&quot;self&quot;:&quot;https://yosefnems42.atlassian.net/rest/api/2/priority/3&quot;,&quot;name&quot;:&quot;Medium&quot;},&quot;votes&quot;:{&quot;self&quot;:&quot;https://yosefnems42.atlassian.net/rest/api/2/issue/MBA-10/votes&quot;,&quot;votes&quot;:0,&quot;hasVoted&quot;:false},&quot;fixVersions&quot;:[],&quot;subtasks&quot;:[],&quot;labels&quot;:[]},&quot;self&quot;:&quot;https://yosefnems42.atlassian.net/rest/api/2/issue/10009&quot;,&quot;key&quot;:&quot;MBA-10&quot;,&quot;id&quot;:10009}}</value>
+         </entry>
+      </properties>
+      <type>TESTCASE</type>
+   </integratedEntity>
+   <comment></comment>
+   <recordOption>OTHER</recordOption>
+   <testCaseGuid>942d89d6-cb8d-48ab-9730-fdcd15a8c196</testCaseGuid>
+</TestCaseEntity>

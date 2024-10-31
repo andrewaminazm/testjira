@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description>eeee</description>
+   <name>new</name>
+   <tag>jira-integration</tag>
+   <comment></comment>
+   <recordOption>OTHER</recordOption>
+   <testCaseGuid>e8c08fd1-b670-4694-839d-bcbb7283c456</testCaseGuid>
+</TestCaseEntity>
