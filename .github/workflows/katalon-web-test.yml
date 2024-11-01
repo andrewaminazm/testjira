@@ -83,7 +83,7 @@ jobs:
           TRANSITION_ID=$(curl -s -u $JIRA_USER:$JIRA_API_TOKEN \
             -X GET \
             -H "Content-Type: application/json" \
-            "$JIRA_URL/rest/api/3/issue/PROJ-123/transitions" | \
+            "$JIRA_URL/rest/api/3/issue/MBA-4/transitions" | \
             jq -r '.transitions[] | select(.name=="In Review") | .id')
 
           if [ -z "$TRANSITION_ID" ]; then
