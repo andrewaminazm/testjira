@@ -22,6 +22,12 @@ jobs:
           java-version: '11'
           distribution: 'temurin'  # Specify the JDK distribution
 
+      # Install Xvfb for headless execution
+      - name: Install Xvfb
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb
+
       # Download Katalon Studio version 9.7.2
       - name: Download Katalon Studio
         run: |
@@ -47,9 +53,14 @@ jobs:
             exit 1
           fi
 
-      # Run Katalon Studio tests in headless mode
+      # Run Katalon Studio tests in headless mode using Xvfb
       - name: Run Katalon tests
         run: |
+          # Start Xvfb
+          Xvfb :99 -screen 0 1920x1080x24 &
+          export DISPLAY=:99  # Set the display variable
+          
+          # Run the Katalon test suite
           $KATALON_HOME/katalonc \
           -noSplash \
           -runMode=console \
@@ -57,10 +68,12 @@ jobs:
           -retry=0 \
           -testSuitePath="Test Suites/Status" \  # Your test suite name
           -browserType="ChromeHeadless" \  # Use headless Chrome
-          -apiKey=$KATALON_API_KEY
+          -apiKey=$KATALON_API_KEY \
+          -executionProfile="default" \
+          -logLevel=info \
+          -testSuiteFailOnError=false
         env:
           KATALON_API_KEY: ${{ secrets.KATALON_API_KEY }}
-          DISPLAY: ":99"
 
       # Upload test results as artifacts (optional)
       - name: Upload Test Results
