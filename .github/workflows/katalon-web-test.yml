@@ -24,10 +24,11 @@ jobs:
       # Download Katalon Studio
       - name: Download Katalon Studio
         run: |
-          wget  https://download.katalon.com/9.7.2/Katalon_Studio_Engine_Linux_64-9.7.2.tar.gz -O katalon.tar.gz
-          tar -xzf katalon.tar.gz -C /opt/
-          export KATALON_HOME=/opt/Katalon_Studio_Engine_Linux_64-9.x.x
-          echo "Katalon Studio downloaded and extracted."
+           wget https://download.katalon.com/9.7.2/Katalon_Studio_Engine_Linux_64-9.7.2.tar.gz -O katalon.tar.gz
+           tar -xzf katalon.tar.gz -C /opt/
+          # Set the KATALON_HOME path based on the extracted version
+        export KATALON_HOME=/opt/Katalon_Studio_Engine_Linux_64-9.7.2
+        echo "Katalon Studio downloaded and extracted."
 
       # Run Katalon Studio tests
       - name: Run Katalon tests
