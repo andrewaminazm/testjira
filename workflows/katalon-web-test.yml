@@ -1,4 +1,4 @@
-name: Katalon Web Test.
+name: Katalon Web Test
 
 on:
   push:
