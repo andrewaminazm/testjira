@@ -74,7 +74,7 @@ jobs:
           echo "Skipping Katalon test run as per request."
        # Transition issues from "In Progress" to "In Review"
         runs-on: ubuntu-latest
-    steps:
+        steps:
       - name: Transition Jira Issues
         env:
           JIRA_USER: yosefnems42@gmail.com
