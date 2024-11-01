@@ -79,7 +79,7 @@ jobs:
           -runMode=console \
           -projectPath=$(pwd)/TESTJIRA.prj \
           -retry=0 \
-          -testSuitePath="Test Suites/Status.ts" \
+          -testSuitePath="Test Suites/Status.groovy" \
           -browserType="ChromeHeadless" \
           -apiKey=$KATALON_API_KEY \
           -executionProfile="default" \
