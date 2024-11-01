@@ -73,6 +73,8 @@ jobs:
         run: |
           echo "Skipping Katalon test run as per request."
        # Transition issues from "In Progress" to "In Review"
+        runs-on: ubuntu-latest
+    steps:
       - name: Transition Jira Issues
         env:
           JIRA_USER: yosefnems42@gmail.com
@@ -98,6 +100,11 @@ jobs:
             "$JIRA_URL/rest/api/3/search?jql=status='In Progress'" | \
             jq -r '.issues[].key')
 
+          if [ -z "$ISSUES" ]; then
+            echo "No issues found in 'In Progress' status."
+            exit 0
+          fi
+
           # Loop through each issue and transition it
           for ISSUE in $ISSUES; do
             echo "Transitioning issue: $ISSUE to 'In Review'"
@@ -106,6 +113,12 @@ jobs:
             -H "Content-Type: application/json" \
             --data "{\"transition\":{\"id\":\"$TRANSITION_ID\"}}" \
             "$JIRA_URL/rest/api/3/issue/$ISSUE/transitions"
+
+            if [ $? -ne 0 ]; then
+              echo "Failed to transition issue: $ISSUE"
+            else
+              echo "Successfully transitioned issue: $ISSUE"
+            fi
           done
       # Upload test results as artifacts (optional)
       - name: Upload Test Results
