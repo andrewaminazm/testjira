@@ -3,7 +3,7 @@ name: Katalon Web Test.
 on:
   push:
     branches:
-      - main  # Change to your target branch if different
+      - master  # Change to your target branch if different
 
 jobs:
   katalon-web-test:
