@@ -84,7 +84,7 @@ jobs:
             -X GET \
             -H "Content-Type: application/json" \
             "$JIRA_URL/rest/api/3/issue/MBA-4/transitions" | \
-            jq -r '.transitions[] | select(.name=="In Review") | .id')
+            jq -r '.transitions[] | select(.name=="Done") | .id')
 
           if [ -z "$TRANSITION_ID" ]; then
             echo "Transition ID for 'In Review' not found."
@@ -100,7 +100,7 @@ jobs:
 
           # Loop through each issue and transition it
           for ISSUE in $ISSUES; do
-            echo "Transitioning issue: $ISSUE to 'In Review'"
+            echo "Transitioning issue: $ISSUE to 'Done'"
             curl -s -u $JIRA_USER:$JIRA_API_TOKEN \
             -X POST \
             -H "Content-Type: application/json" \
