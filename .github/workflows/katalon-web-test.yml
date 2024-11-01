@@ -77,9 +77,9 @@ jobs:
           $KATALON_HOME/katalonc \
           -noSplash \
           -runMode=console \
-          -projectPath=$(pwd)/TESTJIRA.prj \
+          -projectPath=$(pwd)/testjira.prj \
           -retry=0 \
-          -testSuitePath="Test Suites/Status.groovy" \
+          -testSuitePath="Test Suites/status" \
           -browserType="ChromeHeadless" \
           -apiKey=$KATALON_API_KEY \
           -executionProfile="default" \
