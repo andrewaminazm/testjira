@@ -47,7 +47,7 @@ jobs:
             exit 1
           fi
 
-      # Run Katalon Studio tests
+      # Run Katalon Studio tests in headless mode
       - name: Run Katalon tests
         run: |
           $KATALON_HOME/katalonc \
@@ -56,7 +56,7 @@ jobs:
           -projectPath=$(pwd)/TESTJIRA.prj \  # Ensure this path is correct
           -retry=0 \
           -testSuitePath="Test Suites/Status" \  # Your test suite name
-          -browserType="Chrome" \
+          -browserType="ChromeHeadless" \  # Use headless Chrome
           -apiKey=$KATALON_API_KEY
         env:
           KATALON_API_KEY: ${{ secrets.KATALON_API_KEY }}
