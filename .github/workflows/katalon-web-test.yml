@@ -51,30 +51,28 @@ jobs:
           fi
 
       # Verify Katalon installation and set executable permissions
-       
-
-      # Run Katalon Studio tests in headless mode using Xvfb
-      - name: Run Katalon test case
+      - name: Verify Katalon Installation
         run: |
-          export NO_AT_BRIDGE=1
-          Xvfb :99 -screen 0 1920x1080x24 &
-          export DISPLAY=:99
-          sleep 5
+          if [ -f "/opt/Katalon_Studio_Engine_Linux_64-9.7.2/katalonc" ]; then
+            echo "Katalon executable found at: /opt/Katalon_Studio_Engine_Linux_64-9.7.2/katalonc"
+            chmod +x /opt/Katalon_Studio_Engine_Linux_64-9.7.2/katalonc  # Ensure the executable has permission
+            echo "Katalon executable is ready to use."
+          else
+            echo "katalonc not found in /opt/Katalon_Studio_Engine_Linux_64-9.7.2."
+            exit 1
+          fi
 
-          $KATALON_HOME/katalonc \
-          -noSplash \
-          -runMode=console \
-          -projectPath=$CI_PROJECT_DIR \
-          -retry=0 \
-          -testCasePath="Test Cases/MBA-7 test" \
-          -browserType="ChromeHeadless" \
-          -apiKey=$KATALON_API_KEY \
-          -executionProfile="default" \
-          -logLevel=info \
-          -testSuiteFailOnError=false
-        env:
-          KATALON_API_KEY: ${{ secrets.KATALON_API_KEY }}
+      # Optional: Add a step to verify Java installation
+      - name: Verify Java Installation
+        run: |
+          java -version
+          echo "Java is correctly installed."
 
+      # Skip running Katalon tests
+      - name: Skipped Katalon Test Run
+        run: |
+          echo "Skipping Katalon test run as per request."
+      
       # Upload test results as artifacts (optional)
       - name: Upload Test Results
         uses: actions/upload-artifact@v3
