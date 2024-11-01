@@ -4,8 +4,7 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:  # Allows manual triggering
-
+  workflow_dispatch:  
 jobs:
   katalon-web-test:
     runs-on: ubuntu-latest
