@@ -24,7 +24,7 @@ jobs:
       # Download Katalon Studio
       - name: Download Katalon Studio
         run: |
-          wget https://download.katalon.com/9.x.x/Katalon_Studio_Engine_Linux_64-9.x.x.tar.gz -O katalon.tar.gz
+          wget  https://download.katalon.com/9.7.0/Katalon_Studio_Engine_Linux_64-9.7.2.tar.gz -O katalon.tar.gz
           tar -xzf katalon.tar.gz -C /opt/
           export KATALON_HOME=/opt/Katalon_Studio_Engine_Linux_64-9.x.x
           echo "Katalon Studio downloaded and extracted."
