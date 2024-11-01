@@ -27,6 +27,8 @@ jobs:
         run: |
           wget https://download.katalon.com/9.7.2/Katalon_Studio_Engine_Linux_64-9.7.2.tar.gz -O katalon.tar.gz
           tar -xzf katalon.tar.gz -C /opt/
+          # Verify extraction
+          ls /opt/  # List contents of /opt to find Katalon directory
           # Set the KATALON_HOME path based on the extracted version
           export KATALON_HOME=/opt/Katalon_Studio_Engine_Linux_64-9.7.2
           echo "Katalon Studio downloaded and extracted."
@@ -35,7 +37,12 @@ jobs:
       - name: Verify Katalon Installation
         run: |
           ls $KATALON_HOME  # List files in the Katalon directory to check extraction
-          echo $KATALON_HOME/katalonc  # Print the path to the Katalon executable
+          # Check if katalonc exists
+          if [ ! -f "$KATALON_HOME/katalonc" ]; then
+            echo "katalonc not found in $KATALON_HOME"
+            exit 1
+          fi
+          echo "Katalon executable found at: $KATALON_HOME/katalonc"
 
       # Run Katalon Studio tests
       - name: Run Katalon tests
