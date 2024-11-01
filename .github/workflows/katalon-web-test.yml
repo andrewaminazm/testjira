@@ -26,26 +26,26 @@ jobs:
       - name: Download Katalon Studio
         run: |
           wget https://download.katalon.com/9.7.2/Katalon_Studio_Engine_Linux_64-9.7.2.tar.gz -O katalon.tar.gz
-          # Inspect the contents of the archive
-          tar -tzf katalon.tar.gz
-          # Extract the archive
           tar -xzf katalon.tar.gz -C /opt/
           # Set the KATALON_HOME path based on the extracted version
-          export KATALON_HOME=/opt/Katalon_Studio_Engine_Linux_64-9.7.2
+          echo "KATALON_HOME=/opt/Katalon_Studio_Engine_Linux_64-9.7.2" >> $GITHUB_ENV
           echo "Katalon Studio downloaded and extracted."
+          echo "KATALON_HOME is set to: $KATALON_HOME"
 
-      # Verify Katalon installation
+      # Verify Katalon installation and set executable permissions
       - name: Verify Katalon Installation
         run: |
           # List files in the Katalon directory to check extraction
-          ls -R /opt/  # Recursively list all files in /opt to find Katalon directory
+          ls -R /opt/
           # Check if katalonc exists in the expected location
-          if [ ! -f "$KATALON_HOME/katalonc" ]; then
+          if [ -f "$KATALON_HOME/katalonc" ]; then
+            echo "Katalon executable found at: $KATALON_HOME/katalonc"
+            chmod +x $KATALON_HOME/katalonc  # Ensure the executable has permission
+          else
             echo "katalonc not found in $KATALON_HOME. Searching in subdirectories:"
             find /opt/ -name "katalonc"  # Search for the katalonc executable
             exit 1
           fi
-          echo "Katalon executable found at: $KATALON_HOME/katalonc"
 
       # Run Katalon Studio tests
       - name: Run Katalon tests
@@ -53,9 +53,9 @@ jobs:
           $KATALON_HOME/katalonc \
           -noSplash \
           -runMode=console \
-          -projectPath=$(pwd)/testjira.prj \
+          -projectPath=$(pwd)/TESTJIRA.prj \  # Ensure this path is correct
           -retry=0 \
-          -testSuitePath="Test Suites/status.ts" \
+          -testSuitePath="Test Suites/Status" \  # Your test suite name
           -browserType="Chrome" \
           -apiKey=$KATALON_API_KEY
         env:
