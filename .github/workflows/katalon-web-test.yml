@@ -26,9 +26,10 @@ jobs:
       - name: Download Katalon Studio
         run: |
           wget https://download.katalon.com/9.7.2/Katalon_Studio_Engine_Linux_64-9.7.2.tar.gz -O katalon.tar.gz
+          # Inspect the contents of the archive
+          tar -tzf katalon.tar.gz
+          # Extract the archive
           tar -xzf katalon.tar.gz -C /opt/
-          # Verify extraction
-          ls /opt/  # List contents of /opt to find Katalon directory
           # Set the KATALON_HOME path based on the extracted version
           export KATALON_HOME=/opt/Katalon_Studio_Engine_Linux_64-9.7.2
           echo "Katalon Studio downloaded and extracted."
@@ -40,6 +41,9 @@ jobs:
           # Check if katalonc exists
           if [ ! -f "$KATALON_HOME/katalonc" ]; then
             echo "katalonc not found in $KATALON_HOME"
+            # Check if it might be in a different directory
+            echo "Checking for katalonc in subdirectories:"
+            find $KATALON_HOME -name "katalonc"  # Search for the katalonc executable
             exit 1
           fi
           echo "Katalon executable found at: $KATALON_HOME/katalonc"
@@ -50,7 +54,7 @@ jobs:
           $KATALON_HOME/katalonc \
           -noSplash \
           -runMode=console \
-          -projectPath=$(pwd)/TESTJIRA.prj \
+          -projectPath=$(pwd)/testjira.prj \
           -retry=0 \
           -testSuitePath="Test Suites/status.ts" \
           -browserType="Chrome" \
