@@ -1,4 +1,4 @@
-name: Katalon Web Test
+name: Katalon Web Test and Transition Jira Issues
 
 on:
   push:
@@ -72,9 +72,17 @@ jobs:
       - name: Skipped Katalon Test Run
         run: |
           echo "Skipping Katalon test run as per request."
-       # Transition issues from "In Progress" to "In Review"
-        runs-on: ubuntu-latest
-        steps:
+
+      # Upload test results as artifacts (optional)
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-reports
+          path: $(pwd)/Reports  # Adjust based on your project structure
+
+  transition-jira-issues:
+    runs-on: ubuntu-latest
+    steps:
       - name: Transition Jira Issues
         env:
           JIRA_USER: yosefnems42@gmail.com
@@ -120,9 +128,3 @@ jobs:
               echo "Successfully transitioned issue: $ISSUE"
             fi
           done
-      # Upload test results as artifacts (optional)
-      - name: Upload Test Results
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-reports
-          path: $(pwd)/Reports  # Adjust based on your project structure
