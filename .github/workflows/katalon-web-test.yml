@@ -34,7 +34,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: /opt/Katalon_Studio_Engine_Linux_64-9.7.2
-          key: ${{ runner.os }}-katalon-${{ hashFiles('**/TESTJIRA.prj') }}  # Cache based on project file changes
+          key: ${{ runner.os }}-katalon-${{ hashFiles('**/testjira.prj') }}  # Cache based on project file changes
           restore-keys: |
             ${{ runner.os }}-katalon-
 
@@ -64,7 +64,7 @@ jobs:
           fi
 
       # Run Katalon Studio tests in headless mode using Xvfb
-      - name: Run Katalon tests
+      - name: Run Katalon test case
         run: |
           export NO_AT_BRIDGE=1
           Xvfb :99 -screen 0 1920x1080x24 &
@@ -76,7 +76,7 @@ jobs:
           -runMode=console \
           -projectPath=$(pwd)/testjira.prj \
           -retry=0 \
-          -testSuitePath="Test Suites/status" \
+          -testCasePath="Test Cases/MBA-7 test.tc" \
           -browserType="ChromeHeadless" \
           -apiKey=$KATALON_API_KEY \
           -executionProfile="default" \
