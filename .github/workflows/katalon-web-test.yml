@@ -34,7 +34,18 @@ jobs:
           export KATALON_HOME=/opt/Katalon_Studio_Engine_Linux_64-9.7.2
           echo "Katalon Studio downloaded and extracted."
 
-      
+      # Verify Katalon installation
+      - name: Verify Katalon Installation
+        run: |
+          # List files in the Katalon directory to check extraction
+          ls -R /opt/  # Recursively list all files in /opt to find Katalon directory
+          # Check if katalonc exists in the expected location
+          if [ ! -f "$KATALON_HOME/katalonc" ]; then
+            echo "katalonc not found in $KATALON_HOME. Searching in subdirectories:"
+            find /opt/ -name "katalonc"  # Search for the katalonc executable
+            exit 1
+          fi
+          echo "Katalon executable found at: $KATALON_HOME/katalonc"
 
       # Run Katalon Studio tests
       - name: Run Katalon tests
