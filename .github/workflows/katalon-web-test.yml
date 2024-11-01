@@ -72,7 +72,41 @@ jobs:
       - name: Skipped Katalon Test Run
         run: |
           echo "Skipping Katalon test run as per request."
-      
+       # Transition issues from "In Progress" to "In Review"
+      - name: Transition Jira Issues
+        env:
+          JIRA_USER: yosefnems42@gmail.com
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}  # Store your API token in GitHub Secrets
+          JIRA_URL: https://yosefnems42.atlassian.net
+        run: |
+          # Get the transition ID for "In Review"
+          TRANSITION_ID=$(curl -s -u $JIRA_USER:$JIRA_API_TOKEN \
+            -X GET \
+            -H "Content-Type: application/json" \
+            "$JIRA_URL/rest/api/3/issue/PROJ-123/transitions" | \
+            jq -r '.transitions[] | select(.name=="In Review") | .id')
+
+          if [ -z "$TRANSITION_ID" ]; then
+            echo "Transition ID for 'In Review' not found."
+            exit 1
+          fi
+
+          # Get issues in "In Progress" status
+          ISSUES=$(curl -s -u $JIRA_USER:$JIRA_API_TOKEN \
+            -X GET \
+            -H "Content-Type: application/json" \
+            "$JIRA_URL/rest/api/3/search?jql=status='In Progress'" | \
+            jq -r '.issues[].key')
+
+          # Loop through each issue and transition it
+          for ISSUE in $ISSUES; do
+            echo "Transitioning issue: $ISSUE to 'In Review'"
+            curl -s -u $JIRA_USER:$JIRA_API_TOKEN \
+            -X POST \
+            -H "Content-Type: application/json" \
+            --data "{\"transition\":{\"id\":\"$TRANSITION_ID\"}}" \
+            "$JIRA_URL/rest/api/3/issue/$ISSUE/transitions"
+          done
       # Upload test results as artifacts (optional)
       - name: Upload Test Results
         uses: actions/upload-artifact@v3
