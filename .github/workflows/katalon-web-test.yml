@@ -64,7 +64,7 @@ jobs:
           $KATALON_HOME/katalonc \
           -noSplash \
           -runMode=console \
-          -projectPath=$(pwd)/testjira.prj \
+          -projectPath=$CI_PROJECT_DIR \
           -retry=0 \
           -testCasePath="Test Cases/MBA-7 test" \
           -browserType="ChromeHeadless" \
