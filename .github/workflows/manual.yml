@@ -1,0 +1,50 @@
+name: Katalon Web Test
+
+on:
+  push:
+    branches:
+      - master  # Change to your target branch if different
+
+jobs:
+  katalon-web-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Checkout the code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Set up Java (required for Katalon)
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+
+      # Download Katalon Studio
+      - name: Download Katalon Studio
+        run: |
+          wget https://download.katalon.com/9.x.x/Katalon_Studio_Engine_Linux_64-9.x.x.tar.gz -O katalon.tar.gz
+          tar -xzf katalon.tar.gz -C /opt/
+          export KATALON_HOME=/opt/Katalon_Studio_Engine_Linux_64-9.x.x
+          echo "Katalon Studio downloaded and extracted."
+
+      # Run Katalon Studio tests
+      - name: Run Katalon tests
+        run: |
+          $KATALON_HOME/katalonc \
+          -noSplash \
+          -runMode=console \
+          -projectPath=$(pwd)/TESTJIRA.prj
+          -retry=0 \
+          -testSuitePath="Test Suites/status.ts" \
+          -browserType="Chrome" \
+          -apiKey=$KATALON_API_KEY
+        env:
+          KATALON_API_KEY: ${{ secrets.KATALON_API_KEY }}  # Store your Katalon API Key in GitHub Secrets
+
+      # Upload test results as artifacts (optional)
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-reports
+          path: $(pwd)/Reports  # Update the path based on your Katalon project structure
