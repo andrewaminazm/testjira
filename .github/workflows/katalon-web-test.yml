@@ -60,6 +60,7 @@ jobs:
           -apiKey=$KATALON_API_KEY
         env:
           KATALON_API_KEY: ${{ secrets.KATALON_API_KEY }}
+          DISPLAY: ":99"
 
       # Upload test results as artifacts (optional)
       - name: Upload Test Results
