@@ -14,7 +14,7 @@ jobs:
     steps:
       # Step 1: Check out the code
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3  # This should be correct
 
       # Step 2: Set up Java (required for Katalon)
       - name: Set up Java
@@ -62,10 +62,13 @@ jobs:
             -runMode=console \
             -projectPath="$GITHUB_WORKSPACE/testjira.prj" \  # Update to your actual project path
             -retry=0 \
-            -testSuitePath="Test Suites/status" \  # Update to your actual test suite path
+            -testSuitePath="Test Suites/YourTestSuite" \  # Update to your actual test suite path
             -executionProfile="default" \
-            -apiKey="60c15f1c-a0a2-43e9-ace9-e2cfb32ce339"  # Replace with your actual API key
+            -apiKey="YOUR_API_KEY_HERE"  # Replace with your actual API key
 
       # Step 7: Upload test results as artifacts
       - name: Upload Test Results
-        uses: actions/upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-reports
+          path: ${{ github.workspace }}/Reports  # Adju
