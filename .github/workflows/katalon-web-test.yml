@@ -74,7 +74,8 @@ jobs:
           # Start Xvfb in the background
           Xvfb :99 -screen 0 1920x1080x24 &
           export DISPLAY=:99  # Set the display variable
-
+             # Suppress dbind warning
+           export NO_AT_BRIDGE=1
           /opt/Katalon_Studio_Engine_Linux_64-9.7.2/katalonc \
           -noSplash \
           -runMode=console \
