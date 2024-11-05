@@ -1,74 +1,16 @@
-name: Katalon Test Execution
-
+name: CI 
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
-
+  push: 
+    branches: [ master ]  
 jobs:
-  katalon-test:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60  # Set a timeout for the job
-
+  build:
+    runs-on: ubuntu-latest 
     steps:
-      # Step 1: Check out the code
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      # Step 2: Set up Java (required for Katalon)
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          java-version: '11'
-          distribution: 'temurin'
-
-      # Step 3: Install Xvfb for headless execution
-      - name: Install Xvfb
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y xvfb
-
-      # Step 4: Download and extract Katalon Studio if not cached
-      - name: Download and Extract Katalon
-        run: |
-          if [ ! -d "/opt/Katalon_Studio_Engine_Linux_64-9.7.2" ]; then
-            wget https://download.katalon.com/9.7.2/Katalon_Studio_Engine_Linux_64-9.7.2.tar.gz -O katalon.tar.gz
-            tar -xzf katalon.tar.gz -C /opt/
-            echo "KATALON_HOME=/opt/Katalon_Studio_Engine_Linux_64-9.7.2" >> $GITHUB_ENV
-          fi
-
-      # Step 5: Set permissions for the Katalon executable
-      - name: Verify and Set Permissions for Katalon
-        run: |
-          if [ -f "/opt/Katalon_Studio_Engine_Linux_64-9.7.2/katalonc" ]; then
-            chmod +x /opt/Katalon_Studio_Engine_Linux_64-9.7.2/katalonc
-          else
-            echo "Katalon executable not found."
-            exit 1
-          fi
-
-      # Step 6: Start Xvfb and run the Katalon test suite
-      - name: Run Katalon Test Suite
-        run: |
-          # Start Xvfb in the background
-          Xvfb :99 -screen 0 1920x1080x24 &
-          export DISPLAY=:99  # Set the display variable
-          export NO_AT_BRIDGE=1  # Suppress accessibility warning
-
-          # Run Katalon with specified project and test suite
-          /opt/Katalon_Studio_Engine_Linux_64-9.7.2/katalonc \
-            -noSplash \
-            -runMode=console \
-            -projectPath="$GITHUB_WORKSPACE/testjira.prj" \  # Update to your actual project path
-            -retry=0 \
-            -testSuitePath="Test Suites/status" \  # Update to your actual test suite path
-            -executionProfile="default" \
-            -apiKey="60c15f1c-a0a2-43e9-ace9-e2cfb32ce339"  # Replace with your actual API key
-
-      # Step 7: Upload test results as artifacts (optional)
-      - name: Upload Test Results
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-reports
-          path: ${{ github.workspace }}/Reports  # Adjust to your reports output path
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Katalon Studio Github Action
+      uses: katalon-studio/katalon-studio-github-action@v2
+      with:
+          version: '8.4.1'
+          projectPath: '${{ github.workspace }}'
+          args: '-noSplash -retry=0 -testSuiteCollectionPath="Test Suites/status" -apiKey=${{ secrets.API_KEY }} -testOpsProjectId=xxxxxx --config -webui.autoUpdateDrivers=true'
