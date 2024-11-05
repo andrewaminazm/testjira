@@ -78,11 +78,11 @@ jobs:
           /opt/Katalon_Studio_Engine_Linux_64-9.7.2/katalonc \
           -noSplash \
           -runMode=console \
-          -projectPath="$GITHUB_WORKSPACE/testjira" \  # Update to your actual main project path
+          -projectPath="$GITHUB_WORKSPACE/testjira.prj" \  # Update to your actual main project path
           -retry=0 \
           -testSuitePath="Test Suites/status" \  # Update to your actual test suite path
           -executionProfile="default" \  # Ensure this matches your setup
-          -apiKey="YOUR_API_KEY_HERE"  # Replace with your actual API key
+          -apiKey="60c15f1c-a0a2-43e9-ace9-e2cfb32ce339"  # Replace with your actual API key
           -outputDirectory="$GITHUB_WORKSPACE/Reports"  # Specify where to save the reports
 
       # Upload test results as artifacts (optional)
