@@ -64,7 +64,7 @@ jobs:
             -retry=0 \
             -testSuitePath="Test Suites/status" \  # Update to your actual test suite path
             -executionProfile="default" \
-            -apiKey="YOUR_API_KEY_HERE"  # Replace with your actual API key
+            -apiKey="60c15f1c-a0a2-43e9-ace9-e2cfb32ce339"  # Replace with your actual API key
 
       # Step 7: Upload test results as artifacts (optional)
       - name: Upload Test Results
