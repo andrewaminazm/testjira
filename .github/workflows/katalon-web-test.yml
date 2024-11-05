@@ -1,14 +1,15 @@
-name: Katalon Web Test and 
+name: Katalon Web Test
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:  
+  workflow_dispatch:
+
 jobs:
   katalon-web-test:
     runs-on: ubuntu-latest
-    timeout-minutes: 60  # Set a timeout for the jo
+    timeout-minutes: 60  # Set a timeout for the job
 
     steps:
       # Checkout the code
@@ -67,16 +68,22 @@ jobs:
           java -version
           echo "Java is correctly installed."
 
-      # Skip running Katalon tests
-      - name: Skipped Katalon Test Run
+      # Run the specific Katalon test suite
+      - name: Run Katalon Test Suite
         run: |
-          echo "Skipping Katalon test run as per request."
+          /opt/Katalon_Studio_Engine_Linux_64-9.7.2/katalonc \
+          -noSplash \
+          -runMode=console \
+          -projectPath="$GITHUB_WORKSPACE/testjira" \  # Update to your actual main project path
+          -retry=0 \
+          -testSuitePath="Test Suites/status" \  # Update to your actual test suite path
+          -executionProfile="default" \  # Ensure this matches your setup
+          -apiKey="YOUR_API_KEY_HERE"  # Replace with your actual API key
+          -outputDirectory="$GITHUB_WORKSPACE/Reports"  # Specify where to save the reports
 
       # Upload test results as artifacts (optional)
       - name: Upload Test Results
         uses: actions/upload-artifact@v3
         with:
           name: test-reports
-          path: $(pwd)/Reports  
-
-  
+          path: ${{ github.workspace }}/Reports  # Adjust to your reports output path
