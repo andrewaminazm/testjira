@@ -68,9 +68,13 @@ jobs:
           java -version
           echo "Java is correctly installed."
 
-      # Run the specific Katalon test suite
+      # Start Xvfb and run the Katalon test suite
       - name: Run Katalon Test Suite
         run: |
+          # Start Xvfb in the background
+          Xvfb :99 -screen 0 1920x1080x24 &
+          export DISPLAY=:99  # Set the display variable
+
           /opt/Katalon_Studio_Engine_Linux_64-9.7.2/katalonc \
           -noSplash \
           -runMode=console \
